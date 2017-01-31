@@ -456,8 +456,7 @@ static int builtin_bind(parser_t &parser, io_streams_t &streams, wchar_t **argv)
     int all = 0;
     const wchar_t *bind_mode = DEFAULT_BIND_MODE;
     bool bind_mode_given = false;
-    const wchar_t *sets_bind_mode = DEFAULT_BIND_MODE;
-    bool sets_bind_mode_given = false;
+    const wchar_t *sets_bind_mode = L"";
     int use_terminfo = 0;
 
     w.woptind = 0;
@@ -516,7 +515,6 @@ static int builtin_bind(parser_t &parser, io_streams_t &streams, wchar_t **argv)
             }
             case 'm': {
                 sets_bind_mode = w.woptarg;
-                sets_bind_mode_given = true;
                 break;
             }
             case '?': {
@@ -528,11 +526,6 @@ static int builtin_bind(parser_t &parser, io_streams_t &streams, wchar_t **argv)
                 break;
             }
         }
-    }
-
-    // if mode is given, but not new mode, default to new mode to mode.
-    if (bind_mode_given && !sets_bind_mode_given) {
-        sets_bind_mode = bind_mode;
     }
 
     switch (mode) {
